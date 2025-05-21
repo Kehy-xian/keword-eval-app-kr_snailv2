@@ -366,7 +366,7 @@ if not st.session_state.keywords_data.empty:
             if st.button(f"🗑️ '{keyword_to_delete_select}' 삭제", key="delete_selected_keyword_button", use_container_width=True):
                 st.session_state.keywords_data = st.session_state.keywords_data[st.session_state.keywords_data['키워드'] != keyword_to_delete_select].reset_index(drop=True)
                 display_html_message(f"'{keyword_to_delete_select}' 키워드가 삭제되었어요!", type="info", icon_char_override="🗑️", duration_sec=1.5)
-                st.session_state.delete_kw_select = "삭제할 키워드 선택..." 
+                # st.session_state.delete_kw_select = "삭제할 키워드 선택..." 
                 st.experimental_rerun()
     
     st.dataframe(st.session_state.keywords_data.style.background_gradient(cmap='YlGnBu', subset=['데이터가용성점수', '유레카지수', '덕질가능지수', '성장잠재력지수']).set_table_styles([{'selector': 'th', 'props': [('text-align', 'center'), ('font-size', '1.05em'), ('padding', '10px 12px')]}, {'selector': 'td', 'props': [('text-align', 'center'), ('padding', '8px 10px')]} ]).set_properties(**{'text-align': 'center', 'width': '150px'}), use_container_width=True)
