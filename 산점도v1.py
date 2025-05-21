@@ -430,7 +430,7 @@ if st.session_state.get('show_graph_section', False) and not st.session_state.ke
                 if df_graph_plot.empty:
                     display_html_message("평가 기준에 따른 유효 데이터가 없어 그래프를 그릴 수 없습니다.", type="warning_red_text", duration_sec=0) 
                 else:
-                    fig_graph, ax_graph = plt.subplots(figsize=(20, 17))
+                    fig_graph, ax_graph = plt.subplots(figsize=(30, 27))
                     base_jitter_strength = 0.05 
                     
                     df_graph_plot['x_jittered'] = df_graph_plot['데이터가용성점수'].astype(float) + \
@@ -446,7 +446,7 @@ if st.session_state.get('show_graph_section', False) and not st.session_state.ke
                     ax_graph.axhline(y=2.5, color='gray', linestyle='--', alpha=0.7); ax_graph.axvline(x=2.5, color='gray', linestyle='--', alpha=0.7)
                     quadrant_fills = {"top_left": ([0.5, 2.5], 2.5, 4.5, 'gold', 0.05), "top_right": ([2.5, 4.5], 2.5, 4.5, 'limegreen', 0.05), "bottom_left": ([0.5, 2.5], 0.5, 2.5, 'tomato', 0.05), "bottom_right": ([2.5, 4.5], 0.5, 2.5, 'dodgerblue', 0.05)}
                     for x_range, y_bottom, y_top, color_fill, alpha_fill in quadrant_fills.values(): ax_graph.fill_between(x_range, y_bottom, y_top, alpha=alpha_fill, color=color_fill)
-                    quadrant_texts = [(1.5, 3.5, "💡 도전적인 보석\n(자료 부족, 높은 가치)", '#b28900'), (3.5, 3.5, "🌟 최고의 보석\n(자료 풍부, 높은 가치)", '#2a7d2a'), (1.5, 1.5, "🤔 재고려 필요\n(자료 부족, 낮은 가치)", '#c33'), (3.5, 1.5, "👍 안정적 선택\n(자료 풍부, 낮은 가치)", '#177a8c')]
+                    quadrant_texts = [(1.5, 3.5, "도전적인 보석\n(자료 부족, 높은 가치)", '#b28900'), (3.5, 3.5, "최고의 보석\n(자료 풍부, 높은 가치)", '#2a7d2a'), (1.5, 1.5, "재고려 필요\n(자료 부족, 낮은 가치)", '#c33'), (3.5, 1.5, "안정적 선택\n(자료 풍부, 낮은 가치)", '#177a8c')]
                     for x_text, y_text, label_text, color_text in quadrant_texts: ax_graph.text(x_text, y_text, label_text, ha='center', va='center', fontsize=11, color=color_text, wrap=True)
                     for _, row_graph in df_graph_plot.iterrows(): ax_graph.annotate(row_graph['키워드'], (row_graph['x_jittered'], row_graph['y_jittered']), xytext=(0, 10), textcoords='offset points', fontsize=10, fontweight='bold', ha='center')
                     ax_graph.set_title(f'키워드 평가 맵: 데이터 가용성 vs {title_suffix_graph}', fontsize=18, pad=25, weight='bold')
