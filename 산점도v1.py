@@ -468,10 +468,15 @@ if st.session_state.get('show_graph_section', False) and not st.session_state.ge
                 else:
                     # 일반 그래프 크기 및 폰트 설정
                     main_font_sizes = {'title': 28, 'label': 25, 'tick': 20, 'quad_text': 20, 'annotate': 20}
+                    st.write(f"--- 디버깅: 일반 그래프 생성 직전 ---")
+                    st.write(f"y_column_graph: {y_column_graph}")
+                    st.write(f"df_graph_plot[{y_column_graph}] 데이터 타입: {df_graph_plot[y_column_graph].dtype}") # 오류 가능성 있는 부분
+                    st.write(f"df_graph_plot['데이터가용성점수'] 데이터 타입: {df_graph_plot['데이터가용성점수'].dtype}")
+                    st.dataframe(df_graph_plot[[y_column_graph, '데이터가용성점수']].head()) # 실제 값 확인
                     fig_main_graph, _ = generate_scatter_plot(df_graph_plot, y_column_graph, title_suffix_graph, 
-                                                              fig_size=(17, 14), font_sizes_config=main_font_sizes) # 아가씨가 조정한 크기
+                                                              fig_size=(17, 14), font_sizes_config=main_font_sizes)
                     st.pyplot(fig_main_graph)
-                    plt.close(fig_main_graph) # 메모리 관리를 위해 명시적으로 닫기
+                    plt.close(fig_main_graph)
 
                     st.markdown('<div style="text-align:center; margin-top:30px;"><h3>✨ 보석 키워드 추천 ✨</h3></div>', unsafe_allow_html=True)
                     quadrants_rec = {"🌟 최고의 보석 (자료 풍부, 높은 가치)": df_graph_plot[(df_graph_plot['데이터가용성점수'] >= 2.5) & (df_graph_plot[y_column_graph] >= 2.5)], 
