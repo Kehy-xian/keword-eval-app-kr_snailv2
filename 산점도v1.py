@@ -430,7 +430,7 @@ if st.session_state.get('show_graph_section', False) and not st.session_state.ke
                 if df_graph_plot.empty:
                     display_html_message("평가 기준에 따른 유효 데이터가 없어 그래프를 그릴 수 없습니다.", type="warning_red_text", duration_sec=0) 
                 else:
-                    fig_graph, ax_graph = plt.subplots(figsize=(12, 9))
+                    fig_graph, ax_graph = plt.subplots(figsize=(20, 17))
                     base_jitter_strength = 0.05 
                     
                     df_graph_plot['x_jittered'] = df_graph_plot['데이터가용성점수'].astype(float) + \
@@ -457,7 +457,7 @@ if st.session_state.get('show_graph_section', False) and not st.session_state.ke
                     img_data_b64_graph = fig_to_base64(fig_graph)
                     st.markdown(f'<div style="text-align:center; margin-top: 20px;"><img src="data:image/png;base64,{img_data_b64_graph}" style="max-width:100%; height:auto; border-radius:18px; box-shadow:0 1.5px 8px #aaa;"></div>', unsafe_allow_html=True)
                     st.markdown('<div style="text-align:center; margin-top:30px;"><h3>✨ 보석 키워드 추천 ✨</h3></div>', unsafe_allow_html=True)
-                    quadrants_rec = {"최고의 보석 (자료 풍부, 높은 가치)": df_graph_plot[(df_graph_plot['데이터가용성점수'] >= 2.5) & (df_graph_plot[y_column_graph] >= 2.5)], "도전적인 보석 (자료 부족, 높은 가치)": df_graph_plot[(df_graph_plot['데이터가용성점수'] < 2.5) & (df_graph_plot[y_column_graph] >= 2.5)], "안정적 선택 (자료 풍부, 낮은 가치)": df_graph_plot[(df_graph_plot['데이터가용성점수'] >= 2.5) & (df_graph_plot[y_column_graph] < 2.5)], "재고려 필요 (자료 부족, 낮은 가치)": df_graph_plot[(df_graph_plot['데이터가용성점수'] < 2.5) & (df_graph_plot[y_column_graph] < 2.5)]}
+                    quadrants_rec = {"🌟 최고의 보석 (자료 풍부, 높은 가치)": df_graph_plot[(df_graph_plot['데이터가용성점수'] >= 2.5) & (df_graph_plot[y_column_graph] >= 2.5)], "💡 도전적인 보석 (자료 부족, 높은 가치)": df_graph_plot[(df_graph_plot['데이터가용성점수'] < 2.5) & (df_graph_plot[y_column_graph] >= 2.5)], "👍 안정적 선택 (자료 풍부, 낮은 가치)": df_graph_plot[(df_graph_plot['데이터가용성점수'] >= 2.5) & (df_graph_plot[y_column_graph] < 2.5)], "🤔 재고려 필요 (자료 부족, 낮은 가치)": df_graph_plot[(df_graph_plot['데이터가용성점수'] < 2.5) & (df_graph_plot[y_column_graph] < 2.5)]}
                     badge_colors_rec = {"🌟 최고의 보석": "#28a745", "💡 도전적인 보석": "#ffc107", "👍 안정적 선택": "#17a2b8", "🤔 재고려 필요": "#dc3545"}
                     for category_rec, keywords_in_cat_rec in quadrants_rec.items():
                         if not keywords_in_cat_rec.empty:
